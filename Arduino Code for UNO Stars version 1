@@ -1,0 +1,11 @@
+int potValue;
+
+void setup() {
+   Serial.begin(9600); 
+}
+
+void loop() {
+   potValue = analogRead(A0)/4;
+   Serial.write(potValue); 
+   
+}
