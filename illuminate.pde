@@ -19,6 +19,7 @@ void setup() {
   ursaArr[4] = new Constellation(ursaMajor.x + 135, ursaMajor.y + 220);
   ursaArr[5] = new Constellation(ursaMajor.x + 225, ursaMajor.y + 280);
   ursaArr[6] = new Constellation(ursaMajor.x + 280, ursaMajor.y + 230);
+  
 
   //set Ursa Minor Constellation
   ursaMinor = new Constellation(800, 190);
@@ -34,7 +35,6 @@ void setup() {
   for (int a = 0; a < randomArr.length; a++){
     randomArr[a] = new RandomStar(random(width), random(height), random(3));
   }
- 
 }
 
 void draw() {
@@ -52,4 +52,10 @@ void draw() {
   for (int a = 0; a < randomArr.length; a++){
    randomArr[a].display();
   }
+}
+
+//reset when mouse clicked
+void mouseClicked(){
+  setup();
+  draw();
 }
