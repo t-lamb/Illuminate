@@ -1,9 +1,9 @@
 class Constellation {
-  float x;
-  float y;
+  float x, y, alphaSpeed;
   float diameter = 8;
   float alpha = 80;
-  float alphaSpeed;
+  int rings = 3;
+  int alphaLow = 70;
 
   Constellation(float _x, float _y) {
     x = _x;
@@ -15,18 +15,22 @@ class Constellation {
     noStroke();
     fill(236, 246, 245, alpha);
     ellipse(x, y, diameter, diameter);
-    //fill(236, 246, 245, alpha -100);
-    //ellipse(x, y, diameter * 2.5, diameter * 2.5);
-    // if (alpha > 10 && alpha <180) {
-    //   fill(236, 246, 245, alpha-200);
-    //   ellipse(x, y, diameter * 3.5, diameter * 3.5);
-    // }
+
+    //draw rings that are slightly larger and less opaque than Constellations
+    for (int i = 1; i <= rings; i++) {
+      fill(236, 246, 245, alpha-60*i);
+      ellipse(x, y, diameter*i, diameter*i);
+    }
   }
 
   void glow() {
     alpha += alphaSpeed;
-    if (alpha > 255 || alpha < 20) {
+    if (alpha > 255 || alpha < alphaLow) {
       alphaSpeed = alphaSpeed * -1;
+    }
+    if (alpha > 180 && alphaSpeed>1) {
+      alphaLow = 150;
+      alphaSpeed = 1;
     }
   }
 }
