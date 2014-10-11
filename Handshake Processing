@@ -1,0 +1,101 @@
+import processing.serial.*;
+
+Serial myPort;
+int[] sensorReadings = {0, 0, 0};
+int w = 500;
+
+void setup() {  
+  size(1024, 1024);
+
+  println(Serial.list());
+  String portName = Serial.list()[2];
+  println("Trying to open " + portName);  
+  myPort =  new Serial(this, Serial.list()[2], 9600);
+  println("opened port");
+  myPort.bufferUntil('\n');
+}
+void draw() {
+  background(0);
+  fill(255);
+  stroke(255);
+  ellipse(width/2 + map(sensorReadings[2], 0, 1024, -500, 500), height/2, sensorReadings[0], sensorReadings[1]);
+}
+
+void serialEvent(Serial p) {
+  //println("***Got a serial event***");
+  //println(p.available() + " bytes in the buffer before read"); 
+  String line = p.readStringUntil('\n');
+  println(line);
+  if (line!=null) {
+    line = trim(line);
+    println("Got the line: " + line + " but since its a string I can't do anything with it...");
+    String[] elements = {"1", "2", "3"};
+    elements = split(line, ",");
+    println("String split yields: ") ;
+    printArray(elements);
+    int[] vals = int(elements);
+    println("Integer conversion yields: ") ;
+    printArray(vals);
+    if (vals.length == 3) sensorReadings = vals;
+    //int i = int(line);
+    //sensorReading = i;
+    //println("The value of that is: " + i + " which I can use in code...");
+  } else {
+    println("Can't process null");
+  }
+}
+
+Arduino (which has the three modes as functions, of which we looked at one at a time in class, and didn't get to handshaking):
+
+int pot1Val, pot2Val, pot3Val;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  pinMode(A0, INPUT);
+  pinMode(A1, INPUT);
+  pinMode(A2, INPUT);
+
+  //if handshake:
+
+//  while (Serial.available() <= 0) {
+//    Serial.println("hello");   // send a starting message
+//    delay(300);
+//  }
+}
+
+void loop() {
+
+  //basic();
+  //handshake();
+  punctuation();
+}
+
+void handshake() {
+  if (Serial.available() > 0) {
+    byte in = Serial.read();
+    punctuation();
+  }
+}
+
+void punctuation() {
+  pot1Val = analogRead(A0);
+  pot2Val = analogRead(A1);
+  pot3Val = analogRead(A2);
+  Serial.print(pot1Val);
+  Serial.print(",");
+  Serial.print(pot2Val);
+  Serial.print(",");
+  Serial.print(pot3Val);
+  Serial.println();
+  delay(100);
+}
+
+
+void basic() {
+  // put your main code here, to run repeatedly:
+  int temp = analogRead(A0);
+  //Serial.println(temp);
+  Serial.println(temp);
+  delay(100);  
+}
