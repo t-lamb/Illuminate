@@ -1,13 +1,14 @@
 class Constellation {
-  float x, y, alphaSpeed;
-  float diameter = 8;
+  float x, y, diameter, alphaSpeed;
+  //float diameter = 8;
   float alpha = 80;
   int rings = 3;
   int alphaLow = 70;
 
-  Constellation(float _x, float _y) {
+  Constellation(float _x, float _y, float _diameter) {
     x = _x;
     y = _y;
+    diameter = _diameter;
     alphaSpeed = 2;
   }
 
