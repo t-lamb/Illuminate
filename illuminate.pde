@@ -3,7 +3,6 @@ import processing.serial.*;
 Serial myPort;
 int starGlow;
 
-
 float star0;
 float star1;
 float star2;
@@ -19,7 +18,6 @@ float star11;
 float star12;
 float star13;
 
-
 Constellation ursaMajor;
 Constellation ursaMinor;
 //create ursaArr array for Constellation objects
@@ -32,7 +30,7 @@ RandomStar[] randomArr = new RandomStar[160];
 void setup() {
   size(1200, 750);
 
-  String portName = "/dev/tty.usbmodemfd131";
+  String portName = "/dev/tty.usbmodem1411";
   myPort = new Serial (this, portName, 9600);
   myPort.bufferUntil('\n');
 
@@ -70,8 +68,51 @@ void draw() {
   //use ursaArr array to draw Constellations
   for (int i = 0; i < ursaArr.length; i = i+1) {
     ursaArr[i].display();
-    if (dist(mouseX, mouseY, ursaArr[i].x, ursaArr[i].y)<20) {
-      ursaArr[i].glow();
+    //   if (dist(mouseX, mouseY, ursaArr[i].x, ursaArr[i].y)<20) {
+    //     ursaArr[i].glow();
+    //   }
+
+    if (star0 > 80) {
+      ursaArr[0].glow();
+    }
+    if (star1 > 70) {
+      ursaArr[1].glow();
+    }
+    if (star2 > 90) {
+      ursaArr[2].glow();
+    }
+    if (star3 > 60) {
+      ursaArr[3].glow();
+    }
+    if (star4 > 60) {
+      ursaArr[4].glow();
+    }
+    if (star5 > 70) {
+      ursaArr[5].glow();
+    }
+    if (star6 > 50) {
+      ursaArr[6].glow();
+    }
+    if (star7 > 70) {
+      ursaArr[7].glow();
+    }
+    if (star8 > 60) {
+      ursaArr[8].glow();
+    }
+    if (star9 > 70) {
+      ursaArr[9].glow();
+    }
+    if (star10 > 50) {
+      ursaArr[10].glow();
+    }
+    if (star11 > 80) {
+      ursaArr[11].glow();
+    }
+    if (star12 > 80) {
+      ursaArr[12].glow();
+    }
+    if (star13 > 80) {
+      ursaArr[13].glow();
     }
   }
 
@@ -81,9 +122,7 @@ void draw() {
   }
 }
 
-
 void serialEvent (Serial myPort) {
-
 
   // read the serial buffer:
   String myString = myPort.readStringUntil('\n');
@@ -91,12 +130,12 @@ void serialEvent (Serial myPort) {
     println(myString);
   }
 
-
   myString = trim(myString);
   // split the string at the commas
-  // and convert the sections into integers:
-  int sensors[] = int(split(myString, ','));
-
+  // and convert the sections into integers in sensors array:
+  //for(int i = 0; i < sensors.length; i++){
+   int sensors[] = int(split(myString, ','));
+  //}
 
   for (int sensorNum = 0; sensorNum < sensors.length; sensorNum++) {
     print("Sensor " + sensorNum + ": " + sensors[sensorNum] + "\t");
@@ -104,23 +143,18 @@ void serialEvent (Serial myPort) {
   // add a linefeed at the end:
   println();
 
-
- if (sensors[0] > 132) {
-   ursaArr[0].glow();
- }
-
-  // star0 = sensors[0];
-  // star1 = sensors[1];
-  // star2 = sensors[2];
-  // star3 = sensors[3];
-  // star4 = sensors[4];
-  // star5 = sensors[5];
-  // star6 = sensors[6]; 
-  // star7 = sensors[7];
-  // star8 = sensors[8];
-  // star9 = sensors[9];
-  // star10 = sensors[10];
-  // star11 = sensors[11];
-  // star12 = sensors[12];
-  // star13 = sensors [13];
+  star0 = sensors[0];
+  star1 = sensors[1];
+  star2 = sensors[2];
+  star3 = sensors[3];
+  star4 = sensors[4];
+  star5 = sensors[5];
+  star6 = sensors[6]; 
+  star7 = sensors[7];
+  star8 = sensors[8];
+  star9 = sensors[9];
+  star10 = sensors[10];
+  star11 = sensors[11];
+  star12 = sensors[12];
+  star13 = sensors [13];
 }
