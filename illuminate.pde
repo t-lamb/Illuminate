@@ -30,7 +30,7 @@ RandomStar[] randomArr = new RandomStar[160];
 void setup() {
   size(1200, 750);
 
-  String portName = "/dev/tty.usbmodem1411";
+  String portName = "/dev/tty.usbmodemfa141";
   myPort = new Serial (this, portName, 9600);
   myPort.bufferUntil('\n');
 
@@ -128,33 +128,37 @@ void serialEvent (Serial myPort) {
   String myString = myPort.readStringUntil('\n');
   if (myString != null) {
     println(myString);
+
+
+    myString = trim(myString);
+    // split the string at the commas
+    // and convert the sections into integers in sensors array:
+    //for(int i = 0; i < sensors.length; i++){
+    int sensors[] = int(split(myString, ','));
+    //}
+    
+    
+    if (sensors.length > 13 ) {
+    for (int sensorNum = 0; sensorNum < sensors.length; sensorNum++) {
+      print("Sensor " + sensorNum + ": " + sensors[sensorNum] + "\t");
+    }
+    // add a linefeed at the end:
+    println();
+
+    star0 = sensors[0];
+    star1 = sensors[1];
+    star2 = sensors[2];
+    star3 = sensors[3];
+    star4 = sensors[4];
+    star5 = sensors[5];
+    star6 = sensors[6]; 
+    star7 = sensors[7];
+    star8 = sensors[8];
+    star9 = sensors[9];
+    star10 = sensors[10];
+    star11 = sensors[11];
+    star12 = sensors[12];
+    star13 = sensors [13];
+    }
   }
-
-  myString = trim(myString);
-  // split the string at the commas
-  // and convert the sections into integers in sensors array:
-  //for(int i = 0; i < sensors.length; i++){
-   int sensors[] = int(split(myString, ','));
-  //}
-
-  for (int sensorNum = 0; sensorNum < sensors.length; sensorNum++) {
-    print("Sensor " + sensorNum + ": " + sensors[sensorNum] + "\t");
-  }
-  // add a linefeed at the end:
-  println();
-
-  star0 = sensors[0];
-  star1 = sensors[1];
-  star2 = sensors[2];
-  star3 = sensors[3];
-  star4 = sensors[4];
-  star5 = sensors[5];
-  star6 = sensors[6]; 
-  star7 = sensors[7];
-  star8 = sensors[8];
-  star9 = sensors[9];
-  star10 = sensors[10];
-  star11 = sensors[11];
-  star12 = sensors[12];
-  star13 = sensors [13];
 }
